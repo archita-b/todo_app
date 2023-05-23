@@ -1,0 +1,11 @@
+.container{
+    background: rgba(128, 128, 128, 0.506);
+    padding: 100px;
+}
+.todo-app{
+    background: white;
+    width: 100%;
+    max-width: 540px;
+    margin: 100px auto 100px;
+    padding: 40px 30px 70px;
+}
