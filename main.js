@@ -8,10 +8,18 @@ function addTodo() {
   if (myInput.value === "") {
     alert("You must write something");
   } else {
-    todos.push(myInput.value);
+    const todoItem = createTodo(myInput.value);
+    todos.push(todoItem);
     showTodos();
     myInput.value = "";
   }
+}
+
+function createTodo(todoText) {
+  const todoObj = {};
+  todoObj[checkbox] = false;
+  todoObj[text] = todoText;
+  return todoObj;
 }
 
 function showTodos() {
@@ -28,6 +36,8 @@ function showTodos() {
     const todoText = document.createElement("p");
 
     const delButton = document.createElement("button");
+    delButton.addEventListener("click", delTodo);
+    delButton.className = "delbutton";
 
     delButton.textContent = "delete";
     todoText.textContent = todos[i];
@@ -37,4 +47,12 @@ function showTodos() {
     todoDiv.appendChild(delButton);
     todoList.appendChild(todoDiv);
   }
+}
+
+// const delButton = document.getElementsByClassName("delbutton");
+// delButton.addEventListener("click", delTodo);
+
+function delTodo() {
+  const myInput = document.getElementsByClassName("tododiv");
+  todoDiv.textContent = "";
 }
