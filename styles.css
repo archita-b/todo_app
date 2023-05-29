@@ -1,6 +1,6 @@
 *{
-    margin: 0;
-    padding: 0;
+    /* margin: 0;
+    padding: 0; */
     box-sizing: border-box;
 }
 #todo-container{
@@ -15,7 +15,9 @@
     background: pink;
     padding: 10px;
     width: 100%;
-    max-width: 540px;
+    max-width: 500px;
+    min-height: 500px;
+    border-radius: 20px;
 }
 #todo-input, #add-btn{
     margin: 10px;
@@ -23,7 +25,7 @@
     border-radius: 30px;
 }
 #add-btn{
-    background: orange;
+    background: #333;
     color: white;
     border: none;
 }
