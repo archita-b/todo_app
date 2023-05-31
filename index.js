@@ -92,14 +92,17 @@ function displayTodos() {
     todoItem.appendChild(todoTextSpan);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "delete";
+    deleteBtn.textContent = "X";
     todoItem.appendChild(deleteBtn);
 
     checkbox.addEventListener("click", function () {
-      // if (item.checked === true) {
       todoTextSpan.classList.toggle("completed");
-      // }
-      saveToLocalStorage();
+      // console.log("before", checkbox.checked, "item", item.checked);
+      // console.log("todos before", todos);
+      item.checked = checkbox.checked;
+      // console.log("todos after", todos);
+      // console.log("item =", item.checked);
+      // saveToLocalStorage();
     });
 
     deleteBtn.addEventListener("click", function () {

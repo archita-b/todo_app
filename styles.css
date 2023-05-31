@@ -8,15 +8,17 @@
     padding: 20px;
 }
 #todo-container h1{
+    max-width: 500px;
     margin-bottom: 20px;
     padding: 10px;
+    text-align: center;
 }
 #input-div{
     background: pink;
     padding: 10px;
     width: 100%;
     max-width: 500px;
-    min-height: 500px;
+    min-height: 200px;
     border-radius: 20px;
 }
 #todo-input, #add-btn{
@@ -35,8 +37,11 @@
 .todo-item{
     display: flex;
     flex-direction: row;
-    justify-content: space-between; 
+    justify-content: space-between;
+    margin: 5px;
     padding: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 .completed {
     text-decoration: line-through;
