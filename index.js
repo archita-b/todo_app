@@ -54,11 +54,11 @@ const todoInput = document.querySelector("#todo-input");
 const todoList = document.querySelector("#todo-list");
 const addBtn = document.querySelector("#add-btn");
 
-addBtn.addEventListener("click", addTodo);
+addBtn.addEventListener("click", createTodo);
 
 let todos = [];
 
-function addTodo() {
+function createTodo() {
   const todoText = todoInput.value.trim();
   if (todoText == "") {
     alert("You must write something!");
@@ -76,7 +76,6 @@ function addTodo() {
 }
 
 function displayTodos() {
-  const todoText = todoInput.value.trim();
   todoList.textContent = "";
 
   todos.forEach((item) => {
@@ -92,7 +91,7 @@ function displayTodos() {
     todoItem.appendChild(todoTextSpan);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "X";
+    deleteBtn.textContent = "\u00D7";
     todoItem.appendChild(deleteBtn);
 
     checkbox.addEventListener("click", function () {
@@ -102,7 +101,7 @@ function displayTodos() {
       item.checked = checkbox.checked;
       // console.log("todos after", todos);
       // console.log("item =", item.checked);
-      // saveToLocalStorage();
+      saveToLocalStorage();
     });
 
     deleteBtn.addEventListener("click", function () {
@@ -117,7 +116,7 @@ function displayTodos() {
 
 function saveToLocalStorage() {
   localStorage.setItem("todos", JSON.stringify(todos));
-  displayTodos();
+  // displayTodos();
 }
 
 function getFromLocalStorage() {
