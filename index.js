@@ -1,64 +1,18 @@
-// const todoInput = document.getElementById("todo-input");
-// const todoList = document.getElementById("todo-list");
-// const addBtn = document.getElementById("add-btn");
-// addBtn.addEventListener("click", addTodo);
-
-// function addTodo() {
-//   const todoText = todoInput.value.trim();
-
-//   if (todoText === "") {
-//     alert("You must write something!");
-//     return;
-//   }
-//   const todoItem = document.createElement("div");
-//   todoItem.className = "todo-item";
-
-//   const checkbox = document.createElement("input");
-//   checkbox.setAttribute("type", "checkbox");
-//   todoItem.appendChild(checkbox);
-
-//   const todoTextPara = document.createElement("p");
-//   todoTextPara.textContent = todoText;
-//   todoItem.appendChild(todoTextPara);
-
-//   const deleteBtn = document.createElement("button");
-//   deleteBtn.textContent = "delete";
-//   todoItem.appendChild(deleteBtn);
-
-//   checkbox.addEventListener("click", function () {
-//     todoTextPara.classList.toggle("completed");
-//     // saveTodo();
-//   });
-
-//   deleteBtn.addEventListener("click", function () {
-//     todoItem.remove();
-//     // saveTodo();
-//   });
-
-//   todoList.appendChild(todoItem);
-//   // saveTodo();
-
-//   todoInput.value = "";
-// }
-
-// // function saveTodo() {
-// //   localStorage.setItem("todo", todoList.textContent);
-// // }
-
-// // function showTodo() {
-// //   todoList.textContent = localStorage.getItem("todo");
-// // }
-// // showTodo();
-
-const todoInput = document.querySelector("#todo-input");
-const todoList = document.querySelector("#todo-list");
-const addBtn = document.querySelector("#add-btn");
-
-addBtn.addEventListener("click", createTodo);
-
 let todos = [];
 
-function createTodo() {
+if (localStorage.getItem("todos")) {
+  todos = JSON.parse(localStorage.getItem("todos"));
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+const addBtn = document.querySelector("#add-btn");
+addBtn.onclick = () => addTodo();
+
+function addTodo() {
+  const todoInput = document.querySelector(".todoInput");
   const todoText = todoInput.value.trim();
   if (todoText == "") {
     alert("You must write something!");
@@ -66,65 +20,55 @@ function createTodo() {
   }
   const todo = {
     id: Date.now(),
-    name: todoText,
-    checked: false,
+    text: todoText,
+    completed: false,
   };
   todos.push(todo);
-  saveToLocalStorage(todos);
-  displayTodos();
   todoInput.value = "";
+  saveToLocalStorage();
+  displayTodos();
 }
 
 function displayTodos() {
+  const todoList = document.querySelector("#todoList");
   todoList.textContent = "";
 
-  todos.forEach((item) => {
+  todos.forEach((todo, id) => {
     const todoItem = document.createElement("div");
     todoItem.className = "todo-item";
 
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
+    checkbox.checked = todo.completed;
+    checkbox.onclick = () => toggleCompleted(id);
     todoItem.appendChild(checkbox);
 
     const todoTextSpan = document.createElement("span");
-    todoTextSpan.textContent = item.name;
+    todoTextSpan.textContent = todo.text;
+    if (todo.completed) {
+      todoTextSpan.classList.add("completed");
+    }
     todoItem.appendChild(todoTextSpan);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "\u00D7";
+    deleteBtn.textContent = "\u00d7";
+    deleteBtn.onclick = () => deleteTodo(id);
     todoItem.appendChild(deleteBtn);
-
-    checkbox.addEventListener("click", function () {
-      todoTextSpan.classList.toggle("completed");
-      // console.log("before", checkbox.checked, "item", item.checked);
-      // console.log("todos before", todos);
-      item.checked = checkbox.checked;
-      // console.log("todos after", todos);
-      // console.log("item =", item.checked);
-      saveToLocalStorage();
-    });
-
-    deleteBtn.addEventListener("click", function () {
-      todoItem.remove();
-      todos = todos.filter((todo) => todo.id !== item.id);
-      saveToLocalStorage();
-    });
 
     todoList.appendChild(todoItem);
   });
 }
 
-function saveToLocalStorage() {
-  localStorage.setItem("todos", JSON.stringify(todos));
-  // displayTodos();
+displayTodos();
+
+function toggleCompleted(id) {
+  todos[id].completed = !todos[id].completed;
+  saveToLocalStorage();
+  displayTodos();
 }
 
-function getFromLocalStorage() {
-  const storedTodos = localStorage.getItem("todos");
-  if (storedTodos) {
-    todos = JSON.parse(storedTodos);
-    displayTodos();
-  }
+function deleteTodo(id) {
+  todos.splice(id, 1);
+  saveToLocalStorage();
+  displayTodos();
 }
-
-getFromLocalStorage();
